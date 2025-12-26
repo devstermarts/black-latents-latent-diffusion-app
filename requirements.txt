@@ -1,0 +1,4 @@
+gradio==6.2.0
+scipy
+huggingface_hub
+git+https://github.com/devstermarts/RAVE-Latent-Diffusion-Flex-ed.git
