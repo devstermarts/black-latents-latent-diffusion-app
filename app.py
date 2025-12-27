@@ -1,6 +1,7 @@
 import random
 
 import gradio as gr
+
 from core.command_parser import command_parser
 
 theme = gr.themes.Ocean(
@@ -26,123 +27,123 @@ head = """
 with gr.Blocks(title="Black Latents | Latent Diffusion") as demo:
     gr.Markdown("# *Black Latents* | Latent Diffusion")
     gr.Markdown(
-        "With this app you can spawn millions of unheard audio items using [RAVE-Latent Diffusion](https://github.com/devstermarts/RAVE-Latent-Diffusion-Flex-Ed) and *[Black Latents](https://forum.ircam.fr/projects/detail/black-latents)*, a RAVE V2 VAE trained on the [Black Plastics series](https://martsman.bandcamp.com)."
+        "With this app you can spawn millions of unheard audio items using [RAVE-Latent Diffusion](https://github.com/devstermarts/RAVE-Latent-Diffusion-Flex-Ed) and *[Black Latents](https://forum.ircam.fr/projects/detail/black-latents)*, a RAVE V2 VAE trained on the [Black Plastics series](https://soundcloud.com/martsman/sets/black-plastics-series)."
     )
     gr.Markdown(
         "<small>Set up by [Martin Heinze | marts~](https://www.martstil.de) in December 2025. Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)</small>"
     )
-    with gr.Column():
-        model_selection = gr.Dropdown(
-            choices=[
-                "XS (256)",
-                "S (512)",
-                "M (1024)",
-                "L (2048)",
-                "XL (4096)",
-                "XXL (8192)",
-                "XXXL (16384)",
-            ],
-            value="XS (256)",
-            interactive=True,
-            visible=True,
-            label="Diffusion model selection",
-            info="Select pre trained diffusion model.",
-        )
-        with gr.Group():
-            with gr.Row():
-                seed_a = gr.Number(
-                    label="Seed A",
-                    precision=0,
-                    value=(random.randint(0, 999999999)),
-                    minimum=1,
-                    maximum=999999999,
-                    step=1,
-                    scale=2,
-                    interactive=True,
-                    visible=True,
+    with gr.Row():
+        with gr.Column():
+            model_selection = gr.Dropdown(
+                choices=[
+                    "XS (256)",
+                    "S (512)",
+                    "M (1024)",
+                    "L (2048)",
+                    "XL (4096)",
+                    "XXL (8192)",
+                    "XXXL (16384)",
+                ],
+                value="XS (256)",
+                interactive=True,
+                visible=True,
+                label="Diffusion model selection",
+                info="Select pre trained diffusion model.",
+            )
+            with gr.Group():
+                with gr.Row():
+                    seed_a = gr.Number(
+                        label="Seed A",
+                        precision=0,
+                        value=(random.randint(0, 999999999)),
+                        minimum=1,
+                        maximum=999999999,
+                        step=1,
+                        scale=2,
+                        interactive=True,
+                        visible=True,
+                    )
+                    seed_b = gr.Number(
+                        label="Seed B",
+                        precision=0,
+                        value=(random.randint(0, 999999999)),
+                        minimum=1,
+                        maximum=999999999,
+                        step=1,
+                        scale=2,
+                        interactive=False,
+                        visible=False,
+                    )
+                randomize_button = gr.Button(
+                    "Randomize",
+                    variant="huggingface",
+                    size="sm",
                 )
-                seed_b = gr.Number(
-                    label="Seed B",
-                    precision=0,
-                    value=(random.randint(0, 999999999)),
-                    minimum=1,
-                    maximum=999999999,
-                    step=1,
-                    scale=2,
-                    interactive=True,
-                    visible=True,
-                )
-            with gr.Row():
                 lerp = gr.Checkbox(
                     label="Lerp between seeds",
-                    value=True,
+                    value=False,
                 )
-        with gr.Row():
-            randomize_button = gr.Button(
-                "Randomize seeds",
-                variant="huggingface",
-                size="sm",
+                lerp_factor = gr.Slider(
+                    label="Lerp factor",
+                    info="Interpolation factor between seeds during total length.",
+                    minimum=0.0,
+                    maximum=1.0,
+                    value=0,
+                    step=0.1,
+                    interactive=False,
+                    visible=True,
+                )
+        with gr.Column():
+            with gr.Accordion("Advanced Settings", open=False):
+                temperature = gr.Slider(
+                    label="Temperature",
+                    info="Model dependent. Select high value when in doubt.",
+                    minimum=0.1,
+                    maximum=1.0,
+                    value=1.0,
+                    step=0.01,
+                    interactive=True,
+                    visible=True,
+                )
+                diffusion_steps = gr.Slider(
+                    label="Diffusion Steps",
+                    info="Model dependent. Select higher value when in doubt.",
+                    minimum=1,
+                    maximum=100,
+                    value=10,
+                    step=1,
+                    interactive=True,
+                    visible=True,
+                )
+                latent_scale = gr.Slider(
+                    label="Normalization",
+                    info="Scale/ normalize latents.",
+                    minimum=0.1,
+                    maximum=3,
+                    value=1,
+                    step=0.1,
+                    interactive=True,
+                    visible=True,
+                )
+                multiplier = gr.Slider(
+                    label="Audio length",
+                    info="Model base window size * length multiplier",
+                    minimum=1,
+                    maximum=3,
+                    step=1,
+                    value=1,
+                    interactive=True,
+                    visible=True,
+                )
+            generate_audio_button = gr.Button(
+                "Generate",
+                variant="primary",
             )
-
-        with gr.Accordion("Advanced Settings", open=False):
-            lerp_factor = gr.Slider(
-                label="Lerp factor",
-                info="Crossfade amount from Seed A to B during total length.",
-                minimum=0.0,
-                maximum=1.0,
-                value=1.0,
-                step=0.1,
-                interactive=True,
-                visible=True,
+            audio_player = gr.Audio(
+                label="Generated audio file",
+                show_label=True,
+                buttons=["None"],
             )
-            temperature = gr.Slider(
-                label="Temperature",
-                info="Model dependent. Select high value when in doubt.",
-                minimum=0.1,
-                maximum=1.0,
-                value=1.0,
-                step=0.01,
-                interactive=True,
-                visible=True,
-            )
-            diffusion_steps = gr.Slider(
-                label="Diffusion Steps",
-                info="Model dependent. Select high value when in doubt.",
-                minimum=1,
-                maximum=100,
-                value=100,
-                step=1,
-                interactive=True,
-                visible=True,
-            )
-            latent_scale = gr.Slider(
-                label="Normalization",
-                info="Scale/ normalize latents.",
-                minimum=0.1,
-                maximum=3,
-                value=1,
-                step=0.1,
-                interactive=True,
-                visible=True,
-            )
-            multiplier = gr.Slider(
-                label="Audio length",
-                info="Model base window size * length multiplier",
-                minimum=1,
-                maximum=10,
-                step=1,
-                value=1,
-                interactive=True,
-                visible=True,
-            )
-        generate_audio_button = gr.Button(
-            "Generate",
-            variant="primary",
-        )
-        audio_player = gr.Audio(
-            label="Generated audio file",
-            show_label=True,
-        )
 
     # Event listeners
     randomize_button.click(
@@ -155,7 +156,7 @@ with gr.Blocks(title="Black Latents | Latent Diffusion") as demo:
     )
     lerp.change(
         fn=lambda x: [
-            gr.update(interactive=x, visible=x),
+            gr.update(interactive=x, value=1 if x else 0),
             gr.update(interactive=x, visible=x),
             gr.update(label="Seed A" if x else "Seed"),
         ],
