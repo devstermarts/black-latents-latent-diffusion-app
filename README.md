@@ -51,5 +51,5 @@ echo $HF_TOKEN # Double check if the token has been set.
 - Diffusion models have been trained using [RAVE-Latent Diffusion (Flex'Ed)](https://github.com/devstermarts/RAVE-Latent-Diffusion-Flex-ed), a fork of the original repository [RAVE-Latent-Diffusion](https://github.com/moiseshorta/RAVE-Latent-Diffusion) by Moisés Horta Valenzuela.
 - [RAVE](https://github.com/acids-ircam/RAVE) is a variational autoencoder for fast and high-quality neural audio synthesis by Antoine Caillon and Philippe Esling (acids/IRCAM)
 
-## Licence
+## License
 [_Black Latents_ | Latent Diffusion](https://github.com/devstermarts/black-latents-latent-diffusion-app) © 2025 by [Martin Heinze](https://github.com/devstermarts) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
