@@ -1,5 +1,7 @@
 # _Black Latents_ | Latent Diffusion
-A gradio application that allows you to spawn audio items from _Black Latents_, a RAVE V2 VAE trained on the _Black Plastics_ series using RAVE-Latent Diffusion models.
+A gradio application that allows you to spawn audio items from [_Black Latents_](https://forum.ircam.fr/projects/detail/black-latents), a RAVE V2 VAE trained on the [Black Plastics series](https://soundcloud.com/martsman/sets/black-plastics-series) series using RAVE-Latent Diffusion models.
+
+![UI](./assets/black-latents-latent-diffusion-local.png)
 
 A demo version of this application is accessible on [Huggingface](https://huggingface.co/spaces/martstilde/black-latents-latent-diffusion-demo).
 
@@ -31,7 +33,7 @@ Start the app with...
 ```bash
 gradio app.py
 ```
-Open in browser (usually localhost:7860)
+Open app in browser (usually localhost:7860). 
 
 ## Request model access and download
 To use the app, you need both diffusion models and the _Black Latents_ VAE from the [model hub on on Huggingface](https://huggingface.co/martstilde/black-latents-latent-diffusion-models). The hub is public, but you're required to request access.
