@@ -4,3 +4,4 @@
 *.ts
 /temp
 __pycache__
+*.mp4

@@ -5,7 +5,7 @@ A gradio application that allows you to spawn audio items from [_Black Latents_]
 
 A demo version of this application is accessible on [Huggingface](https://huggingface.co/spaces/martstilde/black-latents-latent-diffusion-demo).
 
-Author: [Martin Heinze | `marts~`](https://martstil.de).
+Author: [Martin Heinze | marts~](https://martstil.de).
 
 Initial commit year: 2025
 
